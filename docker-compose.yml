@@ -1,0 +1,28 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: viniciusgnandt-site:${IMAGE_TAG:-latest}
+    container_name: viniciusgnandt-site
+    restart: always
+    expose:
+      - "80"
+    # Para acesso direto sem reverse proxy, descomente:
+    # ports:
+    #   - "${HOST_PORT:-80}:80"
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "com.viniciusgnandt.service=landing-page"
+      - "com.viniciusgnandt.environment=production"
+
+networks:
+  web:
+    driver: bridge

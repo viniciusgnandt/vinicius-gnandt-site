@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --background-soft: 216 45% 97%;
+  --foreground: 222 25% 11%;
+  --muted: 216 30% 96%;
+  --muted-foreground: 220 10% 42%;
+  --border: 220 16% 90%;
+  --card: 0 0% 100%;
+  --accent: 221 70% 52%;
+  --accent-soft: 221 70% 95%;
+  --accent-foreground: 0 0% 100%;
+  --hero-from: 224 45% 9%;
+  --hero-via: 222 40% 13%;
+  --hero-to: 224 45% 7%;
+  --whatsapp: 142 70% 45%;
+  --whatsapp-hover: 142 70% 39%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: hsl(var(--accent) / 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
