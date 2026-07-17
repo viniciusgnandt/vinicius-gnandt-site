@@ -9,7 +9,7 @@ import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
 import { Guarantees } from "@/components/sections/guarantees";
 import { Faq } from "@/components/sections/faq";
-import { Contact } from "@/components/sections/contact";
+import { FinalCta } from "@/components/sections/final-cta";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         <Projects />
         <Guarantees />
         <Faq />
-        <Contact />
+        <FinalCta />
       </main>
       <Footer />
     </>

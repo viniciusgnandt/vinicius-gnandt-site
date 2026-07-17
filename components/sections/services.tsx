@@ -1,6 +1,10 @@
-import { Code2, Workflow, Cloud, Cable, Compass } from "lucide-react";
+"use client";
+
+import { Code2, Workflow, Cloud, Cable, Compass, MessageCircle, ArrowRight } from "lucide-react";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { site } from "@/lib/site";
+import { trackWhatsAppClick } from "@/lib/gtag";
 
 const services = [
   {
@@ -74,6 +78,31 @@ export function Services() {
             </div>
           </Reveal>
         ))}
+
+        <Reveal delay={services.length * 0.06}>
+          <a
+            href={site.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("services_card")}
+            className="group flex h-full flex-col justify-between rounded-xl bg-hero-from p-8 transition-all duration-200 hover:opacity-90"
+          >
+            <div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-whatsapp/20">
+                <MessageCircle size={18} className="text-whatsapp" aria-hidden="true" />
+              </div>
+              <h3 className="mt-6 text-lg font-semibold text-white">Não sabe por onde começar?</h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Me chama no WhatsApp e conta o que está acontecendo — eu te digo, na hora, qual
+                desses serviços resolve o seu caso.
+              </p>
+            </div>
+            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-whatsapp">
+              Conversar agora
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </a>
+        </Reveal>
       </div>
     </Section>
   );

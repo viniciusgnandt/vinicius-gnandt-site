@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { site } from "@/lib/site";
+import { trackWhatsAppClick } from "@/lib/gtag";
 
 const links = [
   { href: "/#servicos", label: "Serviços" },
@@ -26,7 +27,7 @@ export function Header() {
             aria-label="Vinícius Gnandt"
             className="h-10 w-10 shrink-0 rounded-lg bg-[#07080a] bg-no-repeat sm:h-11 sm:w-11"
             style={{
-              backgroundImage: "url(/logo.png)",
+              backgroundImage: "url(/logo.webp)",
               backgroundSize: "456% auto",
               backgroundPosition: "13% 49%",
             }}
@@ -54,6 +55,7 @@ export function Header() {
             href={site.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("header")}
             className="hidden items-center gap-2 rounded-full bg-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-whatsapp-hover md:inline-flex"
           >
             <MessageCircle size={16} />
@@ -89,6 +91,10 @@ export function Header() {
               href={site.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackWhatsAppClick("header_mobile");
+                setMenuOpen(false);
+              }}
               className="my-3 inline-flex items-center justify-center gap-2 rounded-full bg-whatsapp px-4 py-3 text-sm font-semibold text-white"
             >
               <MessageCircle size={16} />

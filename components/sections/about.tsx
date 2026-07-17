@@ -7,17 +7,21 @@ export function About() {
     <Section id="sobre" className="border-t border-border/60">
       <SectionHeader eyebrow="Sobre" title="Quem vai desenvolver seu projeto" />
 
-      <div className="mx-auto grid max-w-4xl items-center gap-12 md:grid-cols-[280px_1fr]">
+      <div className="mx-auto grid max-w-4xl items-center gap-12 md:grid-cols-[340px_1fr]">
         <Reveal>
-          <div className="relative mx-auto flex aspect-square w-64 items-center justify-center overflow-hidden rounded-2xl border border-border bg-black md:w-full">
-            <Image
-              src="/foto.png"
-              alt="Foto de Vinícius Gnandt"
-              fill
-              sizes="(max-width: 768px) 256px, 280px"
-              className="object-contain"
-              priority
-            />
+          <div className="relative mx-auto w-80 md:w-full">
+            <div className="absolute -inset-3 -rotate-3 rounded-3xl bg-hero-from" aria-hidden="true" />
+            <div className="absolute -inset-1 rotate-2 rounded-3xl bg-accent/30" aria-hidden="true" />
+            <div className="relative aspect-square overflow-hidden rounded-3xl shadow-xl ring-2 ring-border">
+              <Image
+                src="/foto.webp"
+                alt="Foto de Vinícius Gnandt"
+                fill
+                sizes="(max-width: 768px) 320px, 340px"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </Reveal>
 

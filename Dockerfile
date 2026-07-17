@@ -10,6 +10,18 @@ COPY app/ ./app/
 COPY components/ ./components/
 COPY lib/ ./lib/
 COPY public/ ./public/
+
+# Site é exportado estático (output: "export"), então essas variáveis precisam
+# existir em tempo de build — passe via --build-arg ou docker-compose "args:".
+ARG NEXT_PUBLIC_GA_ID
+ARG NEXT_PUBLIC_GOOGLE_ADS_ID
+ARG NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL
+ARG GOOGLE_SITE_VERIFICATION
+ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
+ENV NEXT_PUBLIC_GOOGLE_ADS_ID=$NEXT_PUBLIC_GOOGLE_ADS_ID
+ENV NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL=$NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL
+ENV GOOGLE_SITE_VERIFICATION=$GOOGLE_SITE_VERIFICATION
+
 RUN npm run build
 
 FROM nginx:1.27-alpine

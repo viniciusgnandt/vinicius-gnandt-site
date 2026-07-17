@@ -42,9 +42,12 @@ export function Footer() {
         </nav>
       </div>
 
-      <p className="mx-auto mt-8 max-w-content text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Vinícius Gnandt. Todos os direitos reservados.
-      </p>
+      <div className="mx-auto mt-8 flex max-w-content flex-col items-center justify-between gap-2 text-xs text-muted-foreground sm:flex-row">
+        <p>© {new Date().getFullYear()} Vinícius Gnandt. Todos os direitos reservados.</p>
+        <Link href="/privacidade" className="transition-colors hover:text-accent">
+          Política de Privacidade
+        </Link>
+      </div>
     </footer>
   );
 }

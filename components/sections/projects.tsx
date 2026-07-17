@@ -3,7 +3,6 @@ import {
   BarChart3,
   Globe,
   Landmark,
-  Cable,
   CloudUpload,
   Headset,
   UtensilsCrossed,
@@ -37,12 +36,6 @@ const projects = [
     title: "Automação Financeira",
     tag: "Automação",
     text: "Conciliação, cobrança e emissão de documentos financeiros sem intervenção manual.",
-  },
-  {
-    icon: Cable,
-    title: "Integração ERP",
-    tag: "Integração",
-    text: "Integração entre ERP, e-commerce e logística, eliminando digitação duplicada e divergências.",
   },
   {
     icon: CloudUpload,
