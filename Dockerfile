@@ -1,9 +1,12 @@
+# syntax=docker/dockerfile:1
+
 FROM node:20-alpine AS build
 
 WORKDIR /build
 
 COPY package.json package-lock.json* ./
-RUN npm install --no-fund --no-audit
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --no-fund --no-audit
 
 COPY next.config.ts tsconfig.json tailwind.config.ts postcss.config.mjs ./
 COPY app/ ./app/
@@ -22,7 +25,8 @@ ENV NEXT_PUBLIC_GOOGLE_ADS_ID=$NEXT_PUBLIC_GOOGLE_ADS_ID
 ENV NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL=$NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL
 ENV GOOGLE_SITE_VERIFICATION=$GOOGLE_SITE_VERIFICATION
 
-RUN npm run build
+RUN --mount=type=cache,target=/build/.next/cache \
+    npm run build
 
 FROM nginx:1.27-alpine
 

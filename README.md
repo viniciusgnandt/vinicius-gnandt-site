@@ -30,6 +30,13 @@ O compose usa `expose: 80` para trabalhar atrás de um reverse proxy (Traefik/ng
 `web`. Para acesso direto sem proxy, descomente o bloco `ports` no
 [docker-compose.yml](docker-compose.yml) (`HOST_PORT`, padrão 80).
 
+**Build lento?** O Dockerfile usa cache mounts do BuildKit (`npm ci` e `.next/cache`) para acelerar
+rebuilds — a primeira build ainda demora (baixa imagens base, instala tudo do zero), mas as
+próximas devem ser bem mais rápidas. Isso exige BuildKit habilitado (padrão no Docker 23+/Compose
+v2; se necessário, rode com `DOCKER_BUILDKIT=1 docker compose build`). Se mesmo assim continuar
+lento, o gargalo provavelmente é hardware do servidor (CPU/RAM insuficiente para compilar
+TypeScript), não o Dockerfile em si.
+
 ## Antes de publicar (checklist)
 
 1. **WhatsApp** — em [lib/site.ts](lib/site.ts), troque o número em `whatsapp` pelo seu (formato `55DDDNÚMERO`).
