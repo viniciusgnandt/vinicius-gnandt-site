@@ -14,28 +14,38 @@ npm start        # servir o build
 
 ## Docker (produção)
 
-Mesma estrutura do site Acsa Carlis: build multi-stage (Node compila o export estático do Next.js,
-nginx alpine serve os arquivos), com gzip, cache de assets, headers de segurança e healthcheck.
+**A imagem NÃO é buildada no servidor.** O servidor de produção roda numa VM gratuita da OCI
+(1 CPU / 1GB RAM) — insuficiente para compilar um app Next.js sem travar em swap por 15-20+
+minutos. Em vez disso, o GitHub Actions builda a imagem a cada push em `main`
+([.github/workflows/docker-publish.yml](.github/workflows/docker-publish.yml)) e publica em
+`ghcr.io/viniciusgnandt/vinicius-gnandt-site:latest`. O servidor só baixa a imagem pronta:
 
 ```bash
-# Build e subida via compose (container: viniciusgnandt-site, porta 80 exposta na rede "web")
-docker compose up -d --build
-
-# Ou manualmente:
-docker build -t viniciusgnandt-site:latest .
-docker run -d --name viniciusgnandt-site -p 80:80 viniciusgnandt-site:latest
+# No servidor, a cada deploy:
+docker compose pull
+docker compose up -d
 ```
+
+Isso leva segundos, não minutos, porque não há build nenhum acontecendo ali.
+
+Se o repositório do GHCR estiver privado, autentique o servidor uma vez com um Personal Access
+Token (escopo `read:packages`): `docker login ghcr.io -u SEU_USUARIO`. Ou torne o pacote público em
+GitHub → seu perfil → Packages → vinicius-gnandt-site → Package settings.
 
 O compose usa `expose: 80` para trabalhar atrás de um reverse proxy (Traefik/nginx-proxy) na rede
 `web`. Para acesso direto sem proxy, descomente o bloco `ports` no
 [docker-compose.yml](docker-compose.yml) (`HOST_PORT`, padrão 80).
 
-**Build lento?** O Dockerfile usa cache mounts do BuildKit (`npm ci` e `.next/cache`) para acelerar
-rebuilds — a primeira build ainda demora (baixa imagens base, instala tudo do zero), mas as
-próximas devem ser bem mais rápidas. Isso exige BuildKit habilitado (padrão no Docker 23+/Compose
-v2; se necessário, rode com `DOCKER_BUILDKIT=1 docker compose build`). Se mesmo assim continuar
-lento, o gargalo provavelmente é hardware do servidor (CPU/RAM insuficiente para compilar
-TypeScript), não o Dockerfile em si.
+**Variáveis de build** (`NEXT_PUBLIC_GA_ID` etc.) — como o build acontece no GitHub Actions, não
+mais localmente nem no servidor, configure-as em GitHub → repositório → Settings → Secrets and
+variables → Actions → **Variables** (não Secrets, já que são `NEXT_PUBLIC_*` e vão para o bundle
+público de qualquer forma). Veja os nomes em [.env.example](.env.example).
+
+### Buildar localmente (dev/teste apenas — nunca no servidor de produção)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+```
 
 ## Antes de publicar (checklist)
 

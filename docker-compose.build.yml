@@ -1,0 +1,14 @@
+# Override para buildar a imagem localmente em vez de baixar do registry.
+# Uso: docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+# Não use isso no servidor de produção (1 CPU / 1GB RAM) — o build local trava a máquina.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID:-}
+        NEXT_PUBLIC_GOOGLE_ADS_ID: ${NEXT_PUBLIC_GOOGLE_ADS_ID:-}
+        NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL: ${NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL:-}
+        GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
+    image: viniciusgnandt-site:local
