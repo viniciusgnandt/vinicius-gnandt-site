@@ -3,7 +3,7 @@ services:
     # Imagem pronta, publicada automaticamente pelo GitHub Actions a cada push
     # em main (.github/workflows/docker-publish.yml). O servidor só baixa —
     # nunca compila. Para buildar localmente (dev/teste), use:
-    #   docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+    # docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
     image: ghcr.io/viniciusgnandt/vinicius-gnandt-site:${IMAGE_TAG:-latest}
     container_name: viniciusgnandt-site
     restart: always
